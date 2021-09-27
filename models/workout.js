@@ -34,6 +34,7 @@ const WorkoutSchema = new Schema({
             duration: {
                 type: Number,
                 trim: true,
+                required: "please input a duration length"
             }        
         },
         ]

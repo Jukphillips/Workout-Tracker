@@ -2,6 +2,8 @@ const express = require("express")
 const logger = require("morgan")
 const mongoose = require("mongoose");
 const routes = require('./controllers')
+require("dotenv").config();
+
 
 const PORT = process.env.PORT || 3001;
 const app = express()
