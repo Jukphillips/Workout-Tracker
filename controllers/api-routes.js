@@ -5,15 +5,24 @@ const db = require("../models")
 //find last workout
 router.get("/workouts", async (req, res) => {
 
-    db.Workout.find({})
-        .then(recentworkout => {
+  try {
+    const newWorkout = await db.Workout.aggregate([      {
+        $addFields: {
+          totalDuration: { $sum: "$exercises.duration" },
+          totalWeight: { $sum: "$exercises.weight" },
+          totalSets: { $sum: "$exercises.sets" },
+          totalReps: { $sum: "$exercises.reps" },
+          totalDistance: { $sum: "$exercises.distance" },
+        },
+      },
+    ],
+    );
 
-            res.json(recentworkout)
-        })
-        .catch(err => {
-            cosnole.log(err)
-            res.json(err)
-        })
+    res.json(newWorkout);
+
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 router.post("/workouts", async (req, res) => {
